@@ -1,6 +1,7 @@
 import functools
 import operator
 slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+#slopes = [(3, 1)]
 inp = [line.strip() for line in open("3.in").readlines()]
 
 def get_trees(slope):
