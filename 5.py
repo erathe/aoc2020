@@ -1,14 +1,21 @@
 lines = [line.strip() for line in open("5.in").readlines()]
 
-def b_search(pattern, rows, key):
+def b_search(pattern, rows):
     if len(pattern) == 0:
         return int(rows[0])
     d = pattern.pop(0)
-    nextFirst = rows[0] if d == key else rows[len(rows)//2]
-    nextLast = rows[len(rows)//2] if d == key else rows[len(rows)-1] + 1
-    return b_search(pattern, list(range(nextFirst, nextLast)), key)
+    rows[d] = rows[0] + (rows[1] - rows[0]) // 2
+    return b_search(pattern, rows)
 
-seats = {b_search(list(seat[0:7]), list(range(0,128)), "F")*8 + b_search(list(seat[7:]), list(range(0,9)), "L") for seat in lines}
+def get_id(row, col):
+    return row * 8 + col
+
+def get_seat(inp):
+    row = b_search([1 if d == "F" else 0 for d in inp[:7]], [0,128])
+    col = b_search([1 if d == "L" else 0 for d in inp[7:]], [0, 8])
+    return get_id(row, col)
+
+seats = [get_seat(line) for line in lines]
 #part 1
 print(max(seats))
 
