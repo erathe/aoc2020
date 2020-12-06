@@ -7,3 +7,6 @@ print(sum(len(set(line.replace("\n", ""))) for line in lines))
 
 #part 2
 print(len([c for block in lines for c, i in Counter(block).items() if i == len(block.split("\n"))]))
+
+#part 2 alternative
+print(sum([len(set.intersection(*[set(c) for c in block.split("\n")])) for block in lines]))
