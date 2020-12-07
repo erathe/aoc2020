@@ -19,6 +19,8 @@ def traverse_up(tree, node):
     d = deque(get_parents(tree, node))
     while d:
         node = d.popleft()
+        if node in ancestors:
+            continue;
         ancestors.add(node)
         d.extendleft(get_parents(tree, node))
     return ancestors
