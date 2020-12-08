@@ -28,6 +28,7 @@ for i, line in enumerate(inst):
     if line[0:3] == "jmp":
         copy = inst.copy()
         copy[i] = "nop" + line[3:]
+        #Could have checked the list here to avoid generating all variations
         complete_instructions.append(copy)
         continue
     if line[0:3] == "nop":
