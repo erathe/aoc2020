@@ -1,13 +1,11 @@
 from collections import defaultdict
-lines = sorted([0] + [int(line.strip()) for line in open("10.in").readlines()], reverse=True)
-lines.insert(0, max(lines) + 3)
+from functools import lru_cache
+lines = [int(line.strip()) for line in open("10.in").readlines()]
+lines = [0] + sorted(lines) + [max(lines) + 3]
 
 diffs = defaultdict(lambda: 0)
-for i, l in enumerate(lines):
-    if l == 0:
-        break
-    diffs[l-lines[i+1]] += 1
-
+for a, b in zip(lines, lines[1:]):
+    diffs[b-a] += 1
 #part 1
 print(diffs[3] * diffs[1])
 
@@ -25,3 +23,11 @@ def dfs(s, e, adj):
             paths[s] = sum(dfs(c, e, adj) for c in adj[s])
         return paths[s]
 print(dfs(min(lines), max(lines), adjList))
+
+#part 2 alternative
+stairs = defaultdict(lambda: 0)
+stairs[0] = 1
+for n in lines[1:]:
+    stairs[n] = stairs[n-1] + stairs[n-2] + stairs[n-3]
+
+print(stairs[lines[-1]])
