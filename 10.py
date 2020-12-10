@@ -1,8 +1,6 @@
 from collections import defaultdict
-lines = [int(line.strip()) for line in open("10.in").readlines()] + [0]
-lines.append(max(lines) + 3)
-lines.sort()
-lines.reverse()
+lines = sorted([0] + [int(line.strip()) for line in open("10.in").readlines()], reverse=True)
+lines.insert(0, max(lines) + 3)
 
 diffs = defaultdict(lambda: 0)
 for i, l in enumerate(lines):
@@ -12,6 +10,7 @@ for i, l in enumerate(lines):
 
 #part 1
 print(diffs[3] * diffs[1])
+
 #part 2
 adjList = dict()
 for l in lines:
