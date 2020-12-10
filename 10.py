@@ -14,15 +14,14 @@ adjList = dict()
 for l in lines:
     adjList[l] = [x for x in lines if x-l <=3 and x > l]
 
-paths = defaultdict(lambda: 0)
-def dfs(s, e, adj):
+@lru_cache(maxsize=len(lines))
+def dfs(s, e):
     if s == e:
         return 1
     else:
-        if not paths[s]:
-            paths[s] = sum(dfs(c, e, adj) for c in adj[s])
-        return paths[s]
-print(dfs(min(lines), max(lines), adjList))
+        return sum(dfs(c, e) for c in adjList[s])
+
+print(dfs(min(lines), max(lines)))
 
 #part 2 alternative
 stairs = defaultdict(lambda: 0)
