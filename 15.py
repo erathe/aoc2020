@@ -5,10 +5,10 @@ inp = "0,1,4,13,15,12,16".split(",")
 #end = 2020
 #part 2
 end = 30000000
-spoken = defaultdict(lambda: deque([], 2))
-
-for i, n in enumerate(inp):
-    spoken[int(n)].appendleft(i+1)
+spoken = defaultdict(
+    lambda: deque([], 2),
+    {int(n): deque([i], 2) for i, n in enumerate(inp, 1)}
+)
 
 lastnum = int(inp[-1])
 for i in range(len(inp)+1, end+1):
