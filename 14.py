@@ -36,7 +36,7 @@ for line in lines:
         for mask in masks:
             memory[int("0b" + "".join(mask)[::-1], 2)] = val
 
-        #memory[mem] = int('0b' + mVal[::-1], 2)
+print(sum(v for v in memory.values()))
 
 #for line in lines:
 #    if "mask" in line:
@@ -55,4 +55,4 @@ for line in lines:
 #        memory[mem] = int('0b' + mVal[::-1], 2)
 
 # part 1
-print(sum(v for v in memory.values()))
+#print(sum(v for v in memory.values()))
