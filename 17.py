@@ -1,33 +1,26 @@
 from collections import defaultdict
-from itertools import permutations
+from itertools import product, permutations
 
 lines = [line.strip() for line in open("17.in").readlines()]
-n = set(permutations([1,1,1,1,0,0,0,0,-1,-1,-1,-1], 4))
-n.remove((0,0,0,0))
+moves = [x for x in product([-1, 0, 1], repeat=4)]
 grid = defaultdict(lambda: ".")
 
 def get_neighbours(x, y, z, w, active):
-    return sum([1 for dx, dy, dz, dw in n if (x+dx,y+dy,z+dz,w+dw) in active])
+    return sum([1 for dx, dy, dz, dw in moves if (x+dx,y+dy,z+dz,w+dw) in active and (dx,dy,dz,dw) != (0,0,0,0)])
 
 #misuse defaultdict to grow the grid by one in all directions
 def grow(grid):
     c = grid.copy()
-    for dx,dy,dz,dw in n:
+    for dx,dy,dz,dw in moves:
         for x,y,z,w in c:
             grid[(x+dx,y+dy,z+dz,w+dw)]
 
 #initialise grid
 for y, line in enumerate(lines):
     for x, char in enumerate(line):
+        for z, w in product([-1,0,1], repeat=2):
+            grid[(x,y,z,w)] = "."
         grid[(x,y,0,0)] = char
-        grid[(x,y,-1,0)] = "."
-        grid[(x,y,1,0)] = "."
-        grid[(x,y,0,1)] = "."
-        grid[(x,y,-1,1)] = "."
-        grid[(x,y,1,1)] = "."
-        grid[(x,y,0,-1)] = "."
-        grid[(x,y,-1,-1)] = "."
-        grid[(x,y,1,-1)] = "."
 
 for i in range(6):
     grow(grid)
